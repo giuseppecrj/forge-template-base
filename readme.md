@@ -28,7 +28,8 @@ contract ContractTest is Test {
 ## Deployment
 
 In order to deploy using make you can run
-```
+
+```bash
 make deploy-base contract=DeployHello
 ```
 
