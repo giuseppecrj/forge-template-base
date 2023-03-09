@@ -14,5 +14,11 @@ contract DeployHello is Script {
     vm.stopBroadcast();
 
     console.log("Hello deployed at: ", address(hello));
+
+    vm.writeJson(
+      vm.toString(address(hello)),
+      "client/addresses/Hello.json",
+      ".address"
+    );
   }
 }

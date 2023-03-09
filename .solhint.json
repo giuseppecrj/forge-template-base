@@ -6,7 +6,8 @@
     "avoid-throw": "off",
     "avoid-suicide": "error",
     "avoid-sha3": "warn",
-    "func-name-mixedcase": "off"
+    "func-name-mixedcase": "off",
+    "no-console": "off"
   },
   "plugins": ["prettier"]
 }

@@ -2,7 +2,17 @@
 pragma solidity ^0.8.0;
 
 contract Hello {
-  function sayHello() public pure returns (string memory) {
-    return "Hello, Base!";
+  event GreetingChanged(string oldGreeting, string newGreeting);
+
+  string public greeting = "Hello, Forge!";
+
+  function sayHello() public view returns (string memory) {
+    return greeting;
+  }
+
+  function setGreeting(string memory _greeting) public {
+    string memory oldGreeting = greeting;
+    greeting = _greeting;
+    emit GreetingChanged(oldGreeting, greeting);
   }
 }
