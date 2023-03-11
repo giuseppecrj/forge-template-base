@@ -33,6 +33,8 @@ lint :; solhint src/**/*.sol && solhint src/*.sol
 
 anvil :; anvil -m 'test test test test test test test test test test test junk'
 
+fund :; cast send ${account} --value 1ether -f 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+
 # use the "@" to hide the command from your shell
 deploy-goerli :; @forge script script/${contract}.s.sol:${contract} --rpc-url ${GOERLI_RPC_URL}  --private-key ${PRIVATE_KEY} --broadcast --verify --etherscan-api-key ${ETHERSCAN_API_KEY}  -vvvv
 
