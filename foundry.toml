@@ -6,6 +6,7 @@ gas_reports = ["*"]
 optimizer = true
 optimizer_runs = 20000
 fs_permissions = [{ access = "read-write", path = "./client"}]
+verbosity = 3
 
 [rpc_endpoints]
 goerli = "${GOERLI_RPC_URL}"
