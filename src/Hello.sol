@@ -10,9 +10,9 @@ contract Hello {
     return greeting;
   }
 
-  function setGreeting(string memory _greeting) public {
+  function setGreeting(string memory newGreeting) public {
     string memory oldGreeting = greeting;
-    greeting = _greeting;
-    emit GreetingChanged(oldGreeting, greeting);
+    greeting = newGreeting;
+    emit GreetingChanged(oldGreeting, newGreeting);
   }
 }
