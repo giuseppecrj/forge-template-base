@@ -7,7 +7,7 @@ pragma solidity ^0.8.0;
 
 //contracts
 import "./utils/TestUtils.sol";
-import {Hello} from "src/Hello.sol";
+import {Hello} from "src/hello/Hello.sol";
 
 contract HelloTest is TestUtils {
   Hello internal hello;
