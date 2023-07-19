@@ -1,24 +1,21 @@
 // SPDX-License-Identifier: Apache-2.0
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import "forge-std/Script.sol";
+//interfaces
+
+//libraries
+
+//contracts
+import {Deployer} from "./utils/Deployer.s.sol";
 import {Hello} from "src/hello/Hello.sol";
-import {console} from "forge-std/console.sol";
 
-contract DeployHello is Script {
-  function setUp() public {}
+contract DeployHello is Deployer {
+  function versionName() public pure override returns (string memory) {
+    return "hello";
+  }
 
-  function run() public {
-    vm.startBroadcast();
-    Hello hello = new Hello();
-    vm.stopBroadcast();
-
-    console.log("Hello deployed at: ", address(hello));
-
-    vm.writeJson(
-      vm.toString(address(hello)),
-      "client/addresses/Hello.json",
-      ".address"
-    );
+  function __deploy(uint256 deployerPK) public override returns (address) {
+    vm.broadcast(deployerPK);
+    return address(new Hello());
   }
 }

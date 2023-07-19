@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.8.2 (2023-03-02)
+
+- `ERC721Consecutive`: Fixed a bug when `_mintConsecutive` is used for batches of size 1 that could lead to balance overflow. Refer to the breaking changes section in the changelog for a note on the behavior of `ERC721._beforeTokenTransfer`.
+
+### Breaking changes
+
+- `ERC721`: The internal function `_beforeTokenTransfer` no longer updates balances, which it previously did when `batchSize` was greater than 1. This change has no consequence unless a custom ERC721 extension is explicitly invoking `_beforeTokenTransfer`. Balance updates in extensions must now be done explicitly using `__unsafe_increaseBalance`, with a name that indicates that there is an invariant that has to be manually verified.
+
+## 4.8.1 (2023-01-13)
+
+ * `ERC4626`: Use staticcall instead of call when fetching underlying ERC-20 decimals. ([#3943](https://github.com/OpenZeppelin/openzeppelin-contracts/pull/3943))
+
 ## 4.8.0 (2022-11-08)
 
  * `TimelockController`: Added a new `admin` constructor parameter that is assigned the admin role instead of the deployer account. ([#3722](https://github.com/OpenZeppelin/openzeppelin-contracts/pull/3722))
@@ -74,6 +86,18 @@
 ERC-721 integrators that interpret contract state from events should make sure that they implement the clearing of approval that is implicit in every transfer according to the EIP. Previous versions of OpenZeppelin Contracts emitted an explicit `Approval` event even though it was not required by the specification, and this is no longer the case.
 
 With the new `ERC721Consecutive` extension, the internal workings of `ERC721` are slightly changed. Custom extensions to ERC721 should be reviewed to ensure they remain correct. The internal functions that should be considered are `_ownerOf` (new), `_beforeTokenTransfer`, and `_afterTokenTransfer`.
+
+### ERC-4626 Upgrade Note
+
+Existing `ERC4626` contracts that are upgraded to 4.8 must initialize a new variable that holds the vault token decimals. The recommended way to do this is to use a [reinitializer]:
+
+[reinitializer]: https://docs.openzeppelin.com/contracts/4.x/api/proxy#Initializable-reinitializer-uint8-
+
+```solidity
+function migrateToV48() public reinitializer(2) {
+    __ERC4626_init(IERC20Upgradeable(asset()));
+}
+```
 
 ## 4.7.3
 
