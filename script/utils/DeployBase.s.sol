@@ -33,15 +33,15 @@ contract DeployBase is Script {
     }
   }
 
-  function info(string memory message, string memory arg) internal view {
+  function info(string memory message, string memory arg) internal pure {
     console2.log(string.concat("[INFO]: ", message), arg);
   }
 
-  function info(string memory message, address arg) internal view {
+  function info(string memory message, address arg) internal pure {
     console2.log(string.concat("[INFO]: ", unicode"✅ ", message), arg);
   }
 
-  function warn(string memory message, address arg) internal view {
+  function warn(string memory message, address arg) internal pure {
     console2.log(string.concat("[WARN]: ", unicode"⚠️ ", message), arg);
   }
 
