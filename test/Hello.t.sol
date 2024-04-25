@@ -16,7 +16,7 @@ contract HelloTest is TestUtils {
     hello = new Hello();
   }
 
-  function test_sayHello() external {
+  function test_sayHello() external view {
     assertEq(hello.sayHello(), "Hello, Forge!");
   }
 }
