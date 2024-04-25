@@ -1,17 +1,30 @@
 [profile.default]
-src = 'src'
-out = 'out'
-libs = ['lib', "node_modules"]
-gas_reports = ["*"]
-optimizer = true
-optimizer_runs = 20000
-fs_permissions = [{ access = "read-write", path = "./client"}]
-verbosity = 3
+auto_detect_solc = false # Foundry will automatically try to resolve appropriate Solidity compiler versions
+block_timestamp = 1_680_220_800 # The value of block.timestamp in tests. March 31, 2023 at 00:00 GMT
+bytecode_hash = "none" # Determines the hash method for the metadata hash that is appended to the bytecode
+cbor_metadata = false # Remove all metadata hashes from your contract's bytecode.
+evm_version = "paris" # The EVM version to use during tests.
+fuzz = { runs = 256 } # The amount of fuzz runs to perform for each fuzz test case.
+gas_reports = ["*"] # The contracts to print gas reports for.
+libs = ["node_modules", "lib"]
+optimizer = true # Whether or not to enable the Solidity optimizer.
+optimizer_runs = 200 # The amount of optimizer runs to perform.
+out = "out" # The path to put contract artifacts in, relative to the root of the project.
+script = "scripts" # The path to the contract scripts relative to the root of the project.
+solc_version = "0.8.25" # Uses a single Solidity compiler version for the project
+src = "src" # The path to the contract sources relative to the root of the project.
+test = "test" # The path to the test contract sources relative to the root of the project.
+verbosity = 3 # The verbosity level to use during tests.
+fs_permissions = [
+  { access = "read-write", path = "./client" },
+] # Configures permissions for cheatcodes that touch the filesystem
+extra_output = ["metadata", "abi", "bin"]
+extra_output_files = ["metadata", "abi", "bin"]
 
 [rpc_endpoints]
-goerli = "${GOERLI_RPC_URL}"
+sepolia = "${SEPOLIA_RPC_URL}"
 
 [etherscan]
-# goerli = { key = "${ETHERSCAN_API_KEY}" }
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config

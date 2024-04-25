@@ -16,6 +16,9 @@
     "prettier": "^2.7.1",
     "solhint": "^3.3.7",
     "prettier-plugin-solidity": "^1.1.3",
-    "solhint-plugin-prettier": "^0.0.5"
+    "solhint-plugin-prettier": "^0.0.5",
+    "ds-test": "github:dapphub/ds-test",
+    "forge-std": "github:foundry-rs/forge-std#v1",
+    "@openzeppelin/contracts": "^5.0.2"
   }
 }
