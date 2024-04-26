@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
-contract Hello {
+// interfaces
+import {IHello} from "./IHello.sol";
+
+contract Hello is IHello {
   event GreetingChanged(string oldGreeting, string newGreeting);
 
   string public greeting = "Hello, Forge!";
