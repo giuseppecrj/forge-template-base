@@ -2,18 +2,20 @@
 pragma solidity ^0.8.0;
 
 //interfaces
+import {Hello} from "src/hello/Hello.sol";
 
 //libraries
 
 //contracts
 import "./utils/TestUtils.sol";
-import {Hello} from "src/hello/Hello.sol";
+import {DeployHello} from "scripts/DeployHello.s.sol";
 
 contract HelloTest is TestUtils {
-  Hello internal hello;
+  Hello hello;
 
   function setUp() external {
-    hello = new Hello();
+    DeployHello helloHelper = new DeployHello();
+    hello = Hello(helloHelper.deploy());
   }
 
   function test_sayHello() external view {

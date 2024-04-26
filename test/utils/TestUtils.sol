@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "forge-std/Test.sol";
 
 contract TestUtils is Test {
-  uint256 private immutable _nonce;
+  uint256 private immutable _NONCE;
 
   modifier onlyForked() {
     if (block.number > 1e6) {
@@ -13,7 +13,13 @@ contract TestUtils is Test {
   }
 
   constructor() {
-    _nonce = uint256(
+    vm.setEnv("IS_TEST", "true");
+    vm.setEnv(
+      "LOCAL_PRIVATE_KEY",
+      "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+    );
+
+    _NONCE = uint256(
       keccak256(
         abi.encode(
           tx.origin,
@@ -32,7 +38,7 @@ contract TestUtils is Test {
   }
 
   function _randomBytes32() internal view returns (bytes32) {
-    bytes memory seed = abi.encode(_nonce, block.timestamp, gasleft());
+    bytes memory seed = abi.encode(_NONCE, block.timestamp, gasleft());
     return keccak256(seed);
   }
 
@@ -42,6 +48,16 @@ contract TestUtils is Test {
 
   function _randomAddress() internal view returns (address payable) {
     return payable(address(uint160(_randomUint256())));
+  }
+
+  function _randomAddress(
+    uint256 amount
+  ) internal view returns (address[] memory) {
+    address[] memory accounts = new address[](amount);
+    for (uint256 i = 0; i < amount; i++) {
+      accounts[i] = _randomAddress();
+    }
+    return accounts;
   }
 
   function _randomRange(
@@ -78,17 +94,5 @@ contract TestUtils is Test {
 
   function _isEqual(bytes32 s1, bytes32 s2) public pure returns (bool) {
     return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
-  }
-
-  function _createAccounts(
-    uint256 amount
-  ) internal view returns (address[] memory) {
-    address[] memory accounts = new address[](amount);
-
-    for (uint256 i = 0; i < amount; i++) {
-      accounts[i] = _randomAddress();
-    }
-
-    return accounts;
   }
 }

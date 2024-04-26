@@ -129,11 +129,7 @@ contract DeployBase is Script {
   //                     FILE SYSTEM HELPERS
   // =============================================================
   function exists(string memory path) internal returns (bool) {
-    bytes memory result = ffi("ls", path);
-
-    // ideally we would just check the return code, but the ffi function doesn't return it yet
-    // ffi only returns stdout, the "No such file or directory" message is sent to stderr
-    return result.length > 0;
+    return vm.exists(path);
   }
 
   function createDir(string memory path) internal {
@@ -150,7 +146,7 @@ contract DeployBase is Script {
     return getChain(block.chainid).chainAlias;
   }
 
-  function networkDirPath() internal returns (string memory path) {
+  function deploymentDirPath() internal returns (string memory path) {
     path = string.concat(
       vm.projectRoot(),
       "/client/deployments/",
@@ -158,8 +154,11 @@ contract DeployBase is Script {
     );
   }
 
-  function createChainIdFile(string memory _networkDirPath) internal {
-    string memory chainIdFilePath = string.concat(_networkDirPath, "/.chainId");
+  function createChainIdFile(string memory _deploymentDirPath) internal {
+    string memory chainIdFilePath = string.concat(
+      _deploymentDirPath,
+      "/.chainId"
+    );
     if (!exists(chainIdFilePath)) {
       debug("creating chain id file: ", chainIdFilePath);
       vm.writeFile(chainIdFilePath, vm.toString(block.chainid));
@@ -169,7 +168,7 @@ contract DeployBase is Script {
   function deploymentPath(
     string memory versionName
   ) internal returns (string memory path) {
-    path = string.concat(networkDirPath(), "/", versionName, ".json");
+    path = string.concat(deploymentDirPath(), "/", versionName, ".json");
   }
 
   function clientPaths() internal view returns (string[] memory) {
@@ -222,9 +221,9 @@ contract DeployBase is Script {
     }
 
     // make sure the newtork directory exists
-    string memory _networkDirPath = networkDirPath();
-    createDir(_networkDirPath);
-    createChainIdFile(_networkDirPath);
+    string memory _deploymentDirPath = deploymentDirPath();
+    createDir(_deploymentDirPath);
+    createChainIdFile(_deploymentDirPath);
 
     // save deployment
     string memory jsonStr = vm.serializeAddress("{}", "address", contractAddr);
@@ -284,5 +283,9 @@ contract DeployBase is Script {
 
   function isAnvil() internal view returns (bool) {
     return block.chainid == 31337;
+  }
+
+  function isTesting() internal view returns (bool) {
+    return vm.envOr("IS_TEST", false);
   }
 }
