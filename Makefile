@@ -11,7 +11,7 @@ clean  :; forge clean
 remap :; forge remappings > remappings.txt
 
 # Remove modules
-remove :; rm -rf .gitmodules && rm -rf .git/modules/* && rm -rf lib && touch .gitmodules && git add . && git commit -m "modules"
+remove :; rm -rf .gitmodules && rm -rf .git/modules/* && rm -rf lib
 
 install :; yarn
 
