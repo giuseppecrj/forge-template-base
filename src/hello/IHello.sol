@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-pragma solidity ^0.8.23;
+pragma solidity ^0.8.25;
 
 // interfaces
 
@@ -8,7 +8,7 @@ pragma solidity ^0.8.23;
 // contracts
 
 interface IHello {
-  function sayHello() external view returns (string memory);
+    function sayHello() external view returns (string memory);
 
-  function setGreeting(string memory newGreeting) external;
+    function setGreeting(string memory newGreeting) external;
 }

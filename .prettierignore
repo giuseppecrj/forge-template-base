@@ -1,7 +1,17 @@
-build
+# directories
+broadcast
+cache
 coverage
-out
-lib
-assets
 node_modules
-.next
+out
+
+# files
+*.env
+*.log
+.DS_Store
+.pnp.*
+bun.lockb
+lcov.info
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
